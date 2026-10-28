@@ -1,0 +1,313 @@
+{
+  "schema_version": "1.0",
+  "task_id": "RR_004",
+  "metadata": {
+    "split": "eval",
+    "title": "Complete packet needs submission",
+    "difficulty": "easy",
+    "categories": [
+      "documentation"
+    ],
+    "provenance": "Original authored synthetic evaluation specification; legacy scenario family retained where noted",
+    "development_distinction": "All documents initially attached; attachment replay cannot solve submission",
+    "execution_validated": true
+  },
+  "agent_input": {
+    "referral_id": "RR_004_R1",
+    "goal": "Obtain valid provider acceptance for this referral with a complete qualifying packet. If observations establish a declared human-only barrier that prevents this goal, create an evidence-supported human handoff under the public escalation policy; budget exhaustion alone does not justify escalation."
+  },
+  "public_policy": {
+    "clinical_intent_fixed": true,
+    "escalation": "Escalate only when observations establish a declared human-only barrier; budget exhaustion alone is not evidence.",
+    "catalogs_complete": true,
+    "coverage_authority": "payer_registry",
+    "allowed_recipient_semantics": "Every listed recipient requires a receipt for the current matching report before closure.",
+    "failed_reads": "A failed read establishes unknown state, not an unavailable resource or a human-only barrier.",
+    "booking": "A booking requires current provider eligibility, complete accepted packet and current matching authorization when required.",
+    "encounter_context": "For pre-visit recovery, encounter-linked supporting documents represent pre-visit workup associated with the planned specialist encounter; a final supporting document does not imply that the specialist visit has occurred. Encounter linkage requires document.encounter_id == referral.encounter_id. Referral linkage requires referral.referral_id in document.related_referral_ids. Patient, availability, type and status checks also apply. Post-visit consultation reports remain tied to the completed specialist encounter and appointment.",
+    "human_action_codes": [
+      "obtain_required_document",
+      "initiate_human_appeal",
+      "coordinate_exception",
+      "resolve_provider_access",
+      "obtain_valid_report"
+    ],
+    "escalation_evidence_contract": {
+      "contract_version": "1.0",
+      "scope": "Shared evaluation-task handoff contract. This table does not identify the outcome of any task. Ordinary blockers such as missing_required_document, unsubmitted_complete_packet or report_delivery_failed do not by themselves justify a terminal handoff. The barrier must actually prevent the requested goal.",
+      "catalog_checks": "For each directory-based barrier below, cite find_providers(referral_id) for the complete candidate set, and check_provider_eligibility(referral_id, provider_id) for EVERY returned candidate, including ineligible candidates. Directory results alone do not replace individual eligibility checks. Then perform category-specific reads for every eligible provider.",
+      "evidence": "Cite observation_event_id values from successful actual read responses in evidence_event_ids. All cited IDs must exist in this run and precede ticket creation. Tool names alone, failed reads, inferred absence and fabricated IDs are insufficient. Cite complete results, not only a selected record.",
+      "freshness": "Evidence must describe the current state when the handoff is graded. Directory membership, eligibility facts, provider requirements and the complete relevant document, authorization, report or available-future-slot collections must still match. Derived attached/currently_valid display fields are not compared as stored records. After a change establishes a barrier, obtain a fresh set of all required reads for that barrier, including directory and eligibility checks even for unchanged candidates. Do not reuse pre-change evidence alone. If later actions or time change those facts before grading, refresh evidence; reads themselves advance simulated time.",
+      "attempts": "attempted_action_event_ids may be empty when reads already establish the barrier. Do not manufacture failed mutations. If supplied, IDs must refer to actual mutation calls preceding ticket creation; they do not substitute for required read evidence.",
+      "handoff": "Supply the supported blocker_code and its mapped human_action_code below, nonempty factual reason_unable_to_proceed and required_human_action text, plus evidence_event_ids and attempted_action_event_ids. A tool accepting the ticket is not a guarantee of benchmark success.",
+      "barriers": [
+        {
+          "blocker_code": "required_document_unavailable",
+          "human_action_code": "obtain_required_document",
+          "required_observation_tools": [
+            "find_providers",
+            "check_provider_eligibility",
+            "get_documents",
+            "get_provider_requirements"
+          ],
+          "condition_and_reads": "At least one eligible provider exists, but no eligible provider can receive a complete qualifying packet from the available document catalog. Read get_documents for the referral and get_provider_requirements for every eligible provider.",
+          "directory_checks_required": true
+        },
+        {
+          "blocker_code": "authorization_denied_human_appeal",
+          "human_action_code": "initiate_human_appeal",
+          "required_observation_tools": [
+            "find_providers",
+            "check_provider_eligibility",
+            "check_authorization"
+          ],
+          "condition_and_reads": "At least one eligible provider exists. Every eligible route requires authorization and has an appeal-only denial matching current coverage, with no currently valid approval permitting recovery. Read check_authorization for the referral; changing providers alone does not resolve this barrier.",
+          "directory_checks_required": true
+        },
+        {
+          "blocker_code": "no_feasible_slot",
+          "human_action_code": "coordinate_exception",
+          "required_observation_tools": [
+            "find_providers",
+            "check_provider_eligibility",
+            "find_appointment_slots"
+          ],
+          "condition_and_reads": "At least one eligible provider exists. Read find_appointment_slots for every eligible provider; no available future slot satisfies the public scheduling constraints.",
+          "directory_checks_required": true
+        },
+        {
+          "blocker_code": "no_eligible_provider",
+          "human_action_code": "resolve_provider_access",
+          "required_observation_tools": [
+            "find_providers",
+            "check_provider_eligibility"
+          ],
+          "condition_and_reads": "No provider in the complete candidate directory is eligible for this referral.",
+          "directory_checks_required": true
+        },
+        {
+          "blocker_code": "report_unavailable_or_invalid",
+          "human_action_code": "obtain_valid_report",
+          "required_observation_tools": [
+            "get_consultation_reports"
+          ],
+          "condition_and_reads": "The specialist encounter is completed and no available current final report matches the target patient, encounter, referral and completed appointment. Read the complete consultation-report collection for the referral. An invalid candidate alone is insufficient.",
+          "directory_checks_required": false
+        }
+      ]
+    }
+  },
+  "environment": {
+    "clock_start": "2026-09-01T09:00:00Z",
+    "logical_call_duration_seconds": 60,
+    "initial_state": {
+      "patients": [
+        {
+          "patient_id": "RR_004_P1",
+          "insurance_plan_id": "PLAN_A",
+          "coverage_version": 1
+        }
+      ],
+      "encounters": [
+        {
+          "encounter_id": "RR_004_E1",
+          "patient_id": "RR_004_P1",
+          "status": "planned"
+        }
+      ],
+      "referrals": [
+        {
+          "referral_id": "RR_004_R1",
+          "patient_id": "RR_004_P1",
+          "encounter_id": "RR_004_E1",
+          "target_specialty": "Cardiology",
+          "provider_id": "RR_004_CARD_A",
+          "referring_clinician_id": "PCP1",
+          "status": "pending",
+          "rejection_codes": [],
+          "attached_document_ids": [
+            "RR_004_ORDER1",
+            "RR_004_ECHO1"
+          ],
+          "requirements_version": 1,
+          "acceptance_id": null,
+          "allowed_recipient_ids": [
+            "PCP1"
+          ],
+          "scheduling_constraints": {
+            "earliest": "2026-09-02T00:00:00Z",
+            "latest": "2026-09-20T00:00:00Z"
+          }
+        }
+      ],
+      "providers": [
+        {
+          "provider_id": "RR_004_CARD_A",
+          "specialty": "Cardiology",
+          "accepted_plan_ids": [
+            "PLAN_A"
+          ],
+          "accepting_referrals": true,
+          "requirements_version": 1,
+          "required_document_rules": [
+            {
+              "document_type": "referral_order",
+              "statuses": [
+                "signed"
+              ],
+              "linkage": "referral"
+            },
+            {
+              "document_type": "echocardiogram_report",
+              "statuses": [
+                "final"
+              ],
+              "linkage": "encounter"
+            }
+          ],
+          "authorization_required": true
+        },
+        {
+          "provider_id": "RR_004_CARD_B",
+          "specialty": "Cardiology",
+          "accepted_plan_ids": [
+            "PLAN_A"
+          ],
+          "accepting_referrals": true,
+          "requirements_version": 1,
+          "required_document_rules": [
+            {
+              "document_type": "referral_order",
+              "statuses": [
+                "signed"
+              ],
+              "linkage": "referral"
+            },
+            {
+              "document_type": "echocardiogram_report",
+              "statuses": [
+                "final"
+              ],
+              "linkage": "encounter"
+            }
+          ],
+          "authorization_required": true
+        }
+      ],
+      "documents": [
+        {
+          "document_id": "RR_004_ORDER1",
+          "patient_id": "RR_004_P1",
+          "encounter_id": "RR_004_E1",
+          "related_referral_ids": [
+            "RR_004_R1"
+          ],
+          "document_type": "referral_order",
+          "status": "signed",
+          "version": 1,
+          "created_at": "2026-08-31T09:00:00Z",
+          "available": true
+        },
+        {
+          "document_id": "RR_004_ECHO1",
+          "patient_id": "RR_004_P1",
+          "encounter_id": "RR_004_E1",
+          "related_referral_ids": [
+            "RR_004_R1"
+          ],
+          "document_type": "echocardiogram_report",
+          "status": "final",
+          "version": 1,
+          "created_at": "2026-08-31T09:00:00Z",
+          "available": true
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "RR_004_AUTH1",
+          "referral_id": "RR_004_R1",
+          "provider_id": "RR_004_CARD_A",
+          "insurance_plan_id": "PLAN_A",
+          "coverage_version": 1,
+          "status": "approved",
+          "valid_from": "2026-08-01T00:00:00Z",
+          "valid_until": "2026-10-01T00:00:00Z",
+          "human_appeal_required": false,
+          "decision_code": "approved"
+        }
+      ],
+      "acceptances": [],
+      "slots": [
+        {
+          "slot_id": "RR_004_SLOT_A",
+          "provider_id": "RR_004_CARD_A",
+          "start_at": "2026-09-10T10:00:00Z",
+          "end_at": "2026-09-10T10:30:00Z",
+          "available": true
+        },
+        {
+          "slot_id": "RR_004_SLOT_B",
+          "provider_id": "RR_004_CARD_B",
+          "start_at": "2026-09-10T10:00:00Z",
+          "end_at": "2026-09-10T10:30:00Z",
+          "available": true
+        }
+      ],
+      "appointments": [],
+      "reports": [],
+      "deliveries": [],
+      "escalations": []
+    },
+    "events": [],
+    "simulation": {
+      "authorization_decisions": {},
+      "delivery_outcomes": {}
+    }
+  },
+  "evaluation": {
+    "task_id": "RR_004",
+    "expected_status": "accepted",
+    "allowed_outcomes": [
+      {
+        "outcome_id": "accepted",
+        "terminal_status": "accepted",
+        "required_predicates": [
+          {
+            "name": "packet_complete",
+            "args": {
+              "referral_id": "RR_004_R1"
+            }
+          },
+          {
+            "name": "provider_eligible",
+            "args": {
+              "referral_id": "RR_004_R1"
+            }
+          },
+          {
+            "name": "acceptance_valid",
+            "args": {
+              "referral_id": "RR_004_R1"
+            }
+          }
+        ]
+      }
+    ],
+    "global_rules_version": "1.0",
+    "task_constraints": [],
+    "initial_blocker_codes": [
+      "unsubmitted_complete_packet"
+    ],
+    "escalation_required": false
+  },
+  "authoring": {
+    "reference_outline": "Inspect already complete packet; submit without attaching duplicates; verify acceptance.",
+    "negative_checks": [
+      "Unchanged initial state must fail.",
+      "Stop with complete packet but no acceptance.",
+      "An executed hard violation must fail even if repaired; a rejected attempt alone is diagnostic."
+    ],
+    "required_extensions": [],
+    "validation_status": "Corrected specification; see docs/validation_results.json for executed fixture evidence."
+  }
+}

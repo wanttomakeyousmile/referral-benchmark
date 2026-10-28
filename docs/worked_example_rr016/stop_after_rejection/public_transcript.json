@@ -1,0 +1,90 @@
+[
+  {
+    "tool": "get_referral",
+    "arguments": {
+      "referral_id": "RR_016_R1"
+    },
+    "response": {
+      "call_id": "worked-1",
+      "ok": true,
+      "data": {
+        "acceptance_id": "RR_016_ACC0",
+        "allowed_recipient_ids": [
+          "PCP1"
+        ],
+        "attached_document_ids": [
+          "RR_016_ORDER1",
+          "RR_016_ECHO1"
+        ],
+        "encounter_id": "RR_016_E1",
+        "patient_id": "RR_016_P1",
+        "provider_id": "RR_016_CARD_A",
+        "referral_id": "RR_016_R1",
+        "referring_clinician_id": "PCP1",
+        "rejection_codes": [],
+        "requirements_version": 1,
+        "scheduling_constraints": {
+          "earliest": "2026-09-02T00:00:00Z",
+          "latest": "2026-09-20T00:00:00Z"
+        },
+        "status": "accepted",
+        "target_specialty": "Cardiology",
+        "appointment_ids": [],
+        "delivery_ids": [],
+        "escalation_ids": [],
+        "acceptance_valid": true
+      },
+      "error": null,
+      "observation_event_id": "EV_0001",
+      "simulated_time": "2026-09-01T09:01:00Z"
+    }
+  },
+  {
+    "tool": "find_appointment_slots",
+    "arguments": {
+      "referral_id": "RR_016_R1",
+      "provider_id": "RR_016_CARD_A"
+    },
+    "response": {
+      "call_id": "worked-2",
+      "ok": true,
+      "data": {
+        "constraints": {
+          "earliest": "2026-09-02T00:00:00Z",
+          "latest": "2026-09-20T00:00:00Z"
+        },
+        "slots": [
+          {
+            "available": true,
+            "end_at": "2026-09-10T10:30:00Z",
+            "provider_id": "RR_016_CARD_A",
+            "slot_id": "RR_016_SLOT_A",
+            "start_at": "2026-09-10T10:00:00Z"
+          }
+        ]
+      },
+      "error": null,
+      "observation_event_id": "EV_0002",
+      "simulated_time": "2026-09-01T09:02:00Z"
+    }
+  },
+  {
+    "tool": "schedule_appointment",
+    "arguments": {
+      "referral_id": "RR_016_R1",
+      "slot_id": "RR_016_SLOT_A"
+    },
+    "response": {
+      "call_id": "worked-3",
+      "ok": false,
+      "data": null,
+      "error": {
+        "code": "AUTHORIZATION_INVALID",
+        "message": "Authorization invalid",
+        "retryable": false
+      },
+      "observation_event_id": "EV_0003",
+      "simulated_time": "2026-09-01T09:03:00Z"
+    }
+  }
+]

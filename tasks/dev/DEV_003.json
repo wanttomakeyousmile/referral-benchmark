@@ -1,0 +1,243 @@
+{
+  "schema_version": "1.0",
+  "task_id": "DEV_003",
+  "metadata": {
+    "split": "dev",
+    "provenance": "Original synthetic development case"
+  },
+  "agent_input": {
+    "referral_id": "R1",
+    "goal": "Return the correct report to PCP1 and close referral R1."
+  },
+  "public_policy": {
+    "clinical_intent_fixed": true,
+    "escalation": "Use evidence when an authorized action requires human intervention."
+  },
+  "environment": {
+    "clock_start": "2026-09-01T09:00:00Z",
+    "logical_call_duration_seconds": 60,
+    "initial_state": {
+      "patients": [
+        {
+          "patient_id": "P1",
+          "insurance_plan_id": "PLAN_A",
+          "coverage_version": 1
+        }
+      ],
+      "encounters": [
+        {
+          "encounter_id": "E1",
+          "patient_id": "P1",
+          "status": "completed"
+        },
+        {
+          "encounter_id": "E_OLD",
+          "patient_id": "P1",
+          "status": "completed"
+        }
+      ],
+      "referrals": [
+        {
+          "referral_id": "R1",
+          "patient_id": "P1",
+          "encounter_id": "E1",
+          "target_specialty": "Cardiology",
+          "provider_id": "CARD_A",
+          "referring_clinician_id": "PCP1",
+          "status": "completed",
+          "rejection_codes": [],
+          "attached_document_ids": [
+            "ORDER1",
+            "ECHO1"
+          ],
+          "requirements_version": 1,
+          "acceptance_id": "ACC0",
+          "allowed_recipient_ids": [
+            "PCP1"
+          ],
+          "scheduling_constraints": {
+            "earliest": "2026-09-02T00:00:00Z",
+            "latest": "2026-09-20T00:00:00Z"
+          }
+        }
+      ],
+      "providers": [
+        {
+          "provider_id": "CARD_A",
+          "specialty": "Cardiology",
+          "accepted_plan_ids": [
+            "PLAN_A"
+          ],
+          "accepting_referrals": true,
+          "requirements_version": 1,
+          "required_document_rules": [
+            {
+              "document_type": "referral_order",
+              "statuses": [
+                "signed"
+              ],
+              "linkage": "referral"
+            },
+            {
+              "document_type": "echocardiogram_report",
+              "statuses": [
+                "final"
+              ],
+              "linkage": "encounter"
+            }
+          ],
+          "authorization_required": true
+        },
+        {
+          "provider_id": "CARD_B",
+          "specialty": "Cardiology",
+          "accepted_plan_ids": [
+            "PLAN_A"
+          ],
+          "accepting_referrals": true,
+          "requirements_version": 1,
+          "required_document_rules": [
+            {
+              "document_type": "referral_order",
+              "statuses": [
+                "signed"
+              ],
+              "linkage": "referral"
+            },
+            {
+              "document_type": "echocardiogram_report",
+              "statuses": [
+                "final"
+              ],
+              "linkage": "encounter"
+            }
+          ],
+          "authorization_required": true
+        }
+      ],
+      "documents": [
+        {
+          "document_id": "ORDER1",
+          "patient_id": "P1",
+          "encounter_id": "E1",
+          "related_referral_ids": [
+            "R1"
+          ],
+          "document_type": "referral_order",
+          "status": "signed",
+          "version": 1,
+          "created_at": "2026-08-31T09:00:00Z",
+          "available": true
+        },
+        {
+          "document_id": "ECHO1",
+          "patient_id": "P1",
+          "encounter_id": "E1",
+          "related_referral_ids": [
+            "R1"
+          ],
+          "document_type": "echocardiogram_report",
+          "status": "final",
+          "version": 1,
+          "created_at": "2026-08-31T09:00:00Z",
+          "available": true
+        }
+      ],
+      "authorizations": [
+        {
+          "authorization_id": "AUTH1",
+          "referral_id": "R1",
+          "provider_id": "CARD_A",
+          "insurance_plan_id": "PLAN_A",
+          "coverage_version": 1,
+          "status": "approved",
+          "valid_from": "2026-08-01T00:00:00Z",
+          "valid_until": "2026-10-01T00:00:00Z",
+          "human_appeal_required": false,
+          "decision_code": "approved"
+        }
+      ],
+      "acceptances": [
+        {
+          "acceptance_id": "ACC0",
+          "referral_id": "R1",
+          "provider_id": "CARD_A",
+          "requirements_version": 1,
+          "packet_document_versions": {
+            "ORDER1": 1,
+            "ECHO1": 1
+          },
+          "active": true,
+          "issued_at": "2026-08-20T09:00:00Z"
+        }
+      ],
+      "slots": [
+        {
+          "slot_id": "SLOT_A",
+          "provider_id": "CARD_A",
+          "start_at": "2026-08-25T10:00:00Z",
+          "end_at": "2026-08-25T10:30:00Z",
+          "available": false
+        },
+        {
+          "slot_id": "SLOT_B",
+          "provider_id": "CARD_B",
+          "start_at": "2026-09-10T10:00:00Z",
+          "end_at": "2026-09-10T10:30:00Z",
+          "available": true
+        }
+      ],
+      "appointments": [
+        {
+          "appointment_id": "AP0",
+          "referral_id": "R1",
+          "patient_id": "P1",
+          "provider_id": "CARD_A",
+          "slot_id": "SLOT_A",
+          "status": "completed",
+          "booked_at": "2026-08-21T09:00:00Z",
+          "acceptance_id": "ACC0",
+          "authorization_id": "AUTH1"
+        }
+      ],
+      "reports": [
+        {
+          "report_id": "REPORT_GOOD",
+          "patient_id": "P1",
+          "encounter_id": "E1",
+          "referral_id": "R1",
+          "appointment_id": "AP0",
+          "status": "final",
+          "version": 1,
+          "available": true,
+          "supersedes_report_id": null
+        },
+        {
+          "report_id": "REPORT_OLD",
+          "patient_id": "P1",
+          "encounter_id": "E_OLD",
+          "referral_id": "R1",
+          "appointment_id": "AP0",
+          "status": "final",
+          "version": 1,
+          "available": true,
+          "supersedes_report_id": null
+        }
+      ],
+      "deliveries": [],
+      "escalations": []
+    },
+    "events": [],
+    "simulation": {
+      "authorization_decisions": {},
+      "delivery_outcomes": {}
+    }
+  },
+  "evaluation": {
+    "expected_status": "closed",
+    "initial_blocker_codes": [
+      "report_delivery_pending"
+    ],
+    "escalation_required": false
+  }
+}

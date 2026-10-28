@@ -1,0 +1,223 @@
+{
+  "project_status": "in_development",
+  "scope": "Trusted scripted fixtures and grader validation; not model evaluation or external team-code verification.",
+  "reference_paths_passed": 20,
+  "unchanged_negatives_passed": 20,
+  "inconsistent_final_negatives_passed": 20,
+  "repaired_history_negatives_passed": 20,
+  "alternative_paths_passed": 12,
+  "results": [
+    {
+      "task_id": "RR_001",
+      "reference_passed": true,
+      "reference_calls": 5,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 9
+    },
+    {
+      "task_id": "RR_002",
+      "reference_passed": true,
+      "reference_calls": 7,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 7
+    },
+    {
+      "task_id": "RR_003",
+      "reference_passed": true,
+      "reference_calls": 14,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 14
+    },
+    {
+      "task_id": "RR_004",
+      "reference_passed": true,
+      "reference_calls": 2,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 6
+    },
+    {
+      "task_id": "RR_005",
+      "reference_passed": true,
+      "reference_calls": 3,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 9
+    },
+    {
+      "task_id": "RR_006",
+      "reference_passed": true,
+      "reference_calls": 4,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 9
+    },
+    {
+      "task_id": "RR_007",
+      "reference_passed": true,
+      "reference_calls": 7,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_008",
+      "reference_passed": true,
+      "reference_calls": 6,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_009",
+      "reference_passed": true,
+      "reference_calls": 10,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 10
+    },
+    {
+      "task_id": "RR_010",
+      "reference_passed": true,
+      "reference_calls": 10,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 10
+    },
+    {
+      "task_id": "RR_011",
+      "reference_passed": true,
+      "reference_calls": 5,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 9
+    },
+    {
+      "task_id": "RR_012",
+      "reference_passed": true,
+      "reference_calls": 4,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_013",
+      "reference_passed": true,
+      "reference_calls": 6,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_014",
+      "reference_passed": true,
+      "reference_calls": 7,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_015",
+      "reference_passed": true,
+      "reference_calls": 13,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 13
+    },
+    {
+      "task_id": "RR_016",
+      "reference_passed": true,
+      "reference_calls": 6,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_017",
+      "reference_passed": true,
+      "reference_calls": 5,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 1,
+      "alternative_passed": true,
+      "alternative_calls": 11
+    },
+    {
+      "task_id": "RR_018",
+      "reference_passed": true,
+      "reference_calls": 6,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": true,
+      "alternative_calls": 12
+    },
+    {
+      "task_id": "RR_019",
+      "reference_passed": true,
+      "reference_calls": 10,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 0,
+      "alternative_passed": null
+    },
+    {
+      "task_id": "RR_020",
+      "reference_passed": true,
+      "reference_calls": 5,
+      "unchanged_rejected": true,
+      "inconsistent_final_rejected": true,
+      "repaired_executed_violation_rejected": true,
+      "rejected_attempts": 1,
+      "alternative_passed": null
+    }
+  ]
+}

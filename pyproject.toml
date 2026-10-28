@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "referral-recover"
+version = "0.2.0"
+description = "Synthetic referral recovery tools and isolated trial environment"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["referral_recover*"]

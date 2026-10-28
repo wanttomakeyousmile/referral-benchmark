@@ -1,0 +1,48 @@
+# Optional internal records
+/internal_docs/
+# Credentials and local settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets*.json
+pilot_config.json
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+# Generated evidence and databases
+/runs/
+/results/
+/evidence/
+/pilot_outputs/
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+*.zip
+# OS files
+.DS_Store
+._*
+__MACOSX/
+
+# Local environments and attempt outputs
+.venv/
+__pycache__/
+*.pyc
+example_runs/
+review_runs/
+
+/docs/tracking/
+
+# Team-only evidence, notes and maintenance scripts
+/tracking/

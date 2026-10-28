@@ -1,0 +1,27 @@
+{
+  "task_id": "RR_016",
+  "success": false,
+  "outcomes": [
+    {
+      "outcome_id": "scheduled",
+      "predicates": {
+        "packet_complete": true,
+        "provider_eligible": true,
+        "acceptance_valid": true,
+        "authorization_valid": false,
+        "appointment_valid": false,
+        "no_duplicate_appointment": true
+      },
+      "passed": false
+    }
+  ],
+  "final_state_errors": [],
+  "hard_violations": [],
+  "failed_constraints": [],
+  "missing_required_events": [],
+  "diagnostics": {
+    "rejected_attempts": 1,
+    "premature_attempts": 1,
+    "tool_attempts": 3
+  }
+}

@@ -1,0 +1,1025 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Referral recovery evaluation envelope",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "task_id",
+    "metadata",
+    "agent_input",
+    "public_policy",
+    "environment",
+    "evaluation",
+    "authoring"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^RR_[0-9]{3}$"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "split",
+        "difficulty",
+        "categories",
+        "development_distinction"
+      ],
+      "properties": {
+        "split": {
+          "const": "eval"
+        },
+        "difficulty": {
+          "enum": [
+            "easy",
+            "medium",
+            "hard"
+          ]
+        },
+        "categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "development_distinction": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "agent_input": {
+      "type": "object",
+      "required": [
+        "referral_id",
+        "goal"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "referral_id": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        }
+      }
+    },
+    "public_policy": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object",
+      "required": [
+        "clock_start",
+        "logical_call_duration_seconds",
+        "initial_state",
+        "events",
+        "simulation"
+      ],
+      "properties": {
+        "initial_state": {
+          "type": "object",
+          "required": [
+            "patients",
+            "encounters",
+            "referrals",
+            "providers",
+            "documents",
+            "authorizations",
+            "acceptances",
+            "slots",
+            "appointments",
+            "reports",
+            "deliveries",
+            "escalations"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "patients": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/patients"
+              }
+            },
+            "encounters": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/encounters"
+              }
+            },
+            "referrals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/referrals"
+              }
+            },
+            "providers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/providers"
+              }
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/documents"
+              }
+            },
+            "authorizations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/authorizations"
+              }
+            },
+            "acceptances": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/acceptances"
+              }
+            },
+            "slots": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/slots"
+              }
+            },
+            "appointments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/appointments"
+              }
+            },
+            "reports": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/reports"
+              }
+            },
+            "deliveries": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/deliveries"
+              }
+            },
+            "escalations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/escalations"
+              }
+            }
+          }
+        },
+        "events": {
+          "type": "array"
+        }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "required": [
+        "task_id",
+        "allowed_outcomes",
+        "global_rules_version",
+        "task_constraints",
+        "initial_blocker_codes",
+        "escalation_required"
+      ],
+      "properties": {
+        "allowed_outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "outcome_id",
+              "terminal_status",
+              "required_predicates"
+            ],
+            "properties": {
+              "required_predicates": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "args"
+                  ],
+                  "properties": {
+                    "name": {
+                      "enum": [
+                        "packet_complete",
+                        "provider_eligible",
+                        "acceptance_valid",
+                        "authorization_valid",
+                        "appointment_valid",
+                        "no_duplicate_appointment",
+                        "current_report_matches",
+                        "all_required_receipts",
+                        "closure_valid",
+                        "escalation_ticket_valid",
+                        "barrier_true",
+                        "evidence_supports_barrier",
+                        "human_action_allowed"
+                      ]
+                    },
+                    "args": {
+                      "type": "object",
+                      "required": [
+                        "referral_id"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "referral_id": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "outcome_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "terminal_status": {
+                "enum": [
+                  "accepted",
+                  "closed",
+                  "completed",
+                  "escalated",
+                  "pending",
+                  "rejected",
+                  "scheduled",
+                  "submitted"
+                ]
+              }
+            }
+          }
+        },
+        "escalation_required": {
+          "type": "boolean"
+        },
+        "expected_status": {
+          "type": "string",
+          "description": "Deprecated authoring hint; never used for scoring."
+        },
+        "initial_blocker_codes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "missing_required_document",
+              "unsubmitted_complete_packet",
+              "scheduling_pending",
+              "missing_authorization",
+              "required_document_unavailable",
+              "authorization_denied_human_appeal",
+              "provider_not_accepting",
+              "coverage_conflict",
+              "document_selection_required",
+              "appointment_record_mismatch",
+              "report_delivery_pending",
+              "report_delivery_failed",
+              "no_feasible_slot",
+              "authorization_expired",
+              "report_unavailable_or_invalid",
+              "no_eligible_provider"
+            ]
+          }
+        },
+        "escalation": {
+          "type": "object",
+          "required": [
+            "barrier_code",
+            "allowed_human_action_codes",
+            "required_observation_tools"
+          ],
+          "properties": {
+            "barrier_code": {
+              "enum": [
+                "missing_required_document",
+                "unsubmitted_complete_packet",
+                "scheduling_pending",
+                "missing_authorization",
+                "required_document_unavailable",
+                "authorization_denied_human_appeal",
+                "provider_not_accepting",
+                "coverage_conflict",
+                "document_selection_required",
+                "appointment_record_mismatch",
+                "report_delivery_pending",
+                "report_delivery_failed",
+                "no_feasible_slot",
+                "authorization_expired",
+                "report_unavailable_or_invalid",
+                "no_eligible_provider"
+              ]
+            },
+            "allowed_human_action_codes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "enum": [
+                  "obtain_required_document",
+                  "initiate_human_appeal",
+                  "coordinate_exception",
+                  "resolve_provider_access",
+                  "obtain_valid_report"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "authoring": {
+      "type": "object",
+      "required": [
+        "reference_outline",
+        "negative_checks",
+        "required_extensions",
+        "validation_status"
+      ]
+    }
+  },
+  "$defs": {
+    "patients": {
+      "type": "object",
+      "required": [
+        "patient_id",
+        "insurance_plan_id",
+        "coverage_version"
+      ],
+      "properties": {
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "insurance_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage_version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "encounters": {
+      "type": "object",
+      "required": [
+        "encounter_id",
+        "patient_id",
+        "status"
+      ],
+      "properties": {
+        "encounter_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "completed",
+            "planned"
+          ]
+        }
+      }
+    },
+    "referrals": {
+      "type": "object",
+      "required": [
+        "referral_id",
+        "patient_id",
+        "encounter_id",
+        "target_specialty",
+        "provider_id",
+        "referring_clinician_id",
+        "status",
+        "rejection_codes",
+        "attached_document_ids",
+        "requirements_version",
+        "acceptance_id",
+        "allowed_recipient_ids",
+        "scheduling_constraints"
+      ],
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encounter_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_specialty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referring_clinician_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "accepted",
+            "closed",
+            "completed",
+            "escalated",
+            "pending",
+            "rejected",
+            "scheduled",
+            "submitted"
+          ]
+        },
+        "rejection_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "attached_document_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "requirements_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "acceptance_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allowed_recipient_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "scheduling_constraints": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "earliest": {
+              "type": "string"
+            },
+            "latest": {
+              "type": "string"
+            },
+            "allowed_slot_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "providers": {
+      "type": "object",
+      "required": [
+        "provider_id",
+        "specialty",
+        "accepted_plan_ids",
+        "accepting_referrals",
+        "requirements_version",
+        "required_document_rules",
+        "authorization_required"
+      ],
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "specialty": {
+          "type": "string",
+          "minLength": 1
+        },
+        "accepted_plan_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "accepting_referrals": {
+          "type": "boolean"
+        },
+        "requirements_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "required_document_rules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "document_type",
+              "statuses",
+              "linkage"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "document_type": {
+                "type": "string"
+              },
+              "statuses": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "enum": [
+                    "draft",
+                    "final",
+                    "signed",
+                    "withdrawn"
+                  ]
+                }
+              },
+              "linkage": {
+                "enum": [
+                  "patient",
+                  "encounter",
+                  "referral"
+                ]
+              }
+            }
+          }
+        },
+        "authorization_required": {
+          "type": "boolean"
+        }
+      }
+    },
+    "documents": {
+      "type": "object",
+      "required": [
+        "document_id",
+        "patient_id",
+        "encounter_id",
+        "related_referral_ids",
+        "document_type",
+        "status",
+        "version",
+        "created_at",
+        "available"
+      ],
+      "properties": {
+        "document_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encounter_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "related_referral_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "document_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "final",
+            "signed",
+            "withdrawn"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "authorizations": {
+      "type": "object",
+      "required": [
+        "authorization_id",
+        "referral_id",
+        "provider_id",
+        "insurance_plan_id",
+        "coverage_version",
+        "status",
+        "valid_from",
+        "valid_until",
+        "human_appeal_required",
+        "decision_code"
+      ],
+      "properties": {
+        "authorization_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "insurance_plan_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverage_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "enum": [
+            "approved",
+            "denied",
+            "expired",
+            "invalidated",
+            "pending"
+          ]
+        },
+        "valid_from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "valid_until": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_appeal_required": {
+          "type": "boolean"
+        },
+        "decision_code": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "acceptances": {
+      "type": "object",
+      "required": [
+        "acceptance_id",
+        "referral_id",
+        "provider_id",
+        "requirements_version",
+        "packet_document_versions",
+        "active",
+        "issued_at"
+      ],
+      "properties": {
+        "acceptance_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requirements_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "packet_document_versions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "issued_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "slots": {
+      "type": "object",
+      "required": [
+        "slot_id",
+        "provider_id",
+        "start_at",
+        "end_at",
+        "available"
+      ],
+      "properties": {
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "start_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "end_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "appointments": {
+      "type": "object",
+      "required": [
+        "appointment_id",
+        "referral_id",
+        "patient_id",
+        "provider_id",
+        "slot_id",
+        "status",
+        "booked_at",
+        "acceptance_id",
+        "authorization_id"
+      ],
+      "properties": {
+        "appointment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "cancelled",
+            "completed",
+            "scheduled"
+          ]
+        },
+        "booked_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "acceptance_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "authorization_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "reports": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "patient_id",
+        "encounter_id",
+        "referral_id",
+        "appointment_id",
+        "status",
+        "version",
+        "available",
+        "supersedes_report_id"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "patient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "encounter_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "appointment_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "final",
+            "superseded",
+            "withdrawn"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "supersedes_report_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "deliveries": {
+      "type": "object",
+      "required": [
+        "delivery_id",
+        "referral_id",
+        "report_id",
+        "report_version",
+        "recipient_id",
+        "status",
+        "receipt_id",
+        "failure_code"
+      ],
+      "properties": {
+        "delivery_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "recipient_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "failed",
+            "pending",
+            "received"
+          ]
+        },
+        "receipt_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "failure_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "escalations": {
+      "type": "object",
+      "required": [
+        "ticket_id",
+        "referral_id",
+        "blocker_code",
+        "evidence_event_ids",
+        "attempted_action_event_ids",
+        "reason_unable_to_proceed",
+        "human_action_code",
+        "required_human_action",
+        "created_at"
+      ],
+      "properties": {
+        "ticket_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocker_code": {
+          "enum": [
+            "missing_required_document",
+            "unsubmitted_complete_packet",
+            "scheduling_pending",
+            "missing_authorization",
+            "required_document_unavailable",
+            "authorization_denied_human_appeal",
+            "provider_not_accepting",
+            "coverage_conflict",
+            "document_selection_required",
+            "appointment_record_mismatch",
+            "report_delivery_pending",
+            "report_delivery_failed",
+            "no_feasible_slot",
+            "authorization_expired",
+            "report_unavailable_or_invalid",
+            "no_eligible_provider"
+          ]
+        },
+        "evidence_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "attempted_action_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "reason_unable_to_proceed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_action_code": {
+          "enum": [
+            "obtain_required_document",
+            "initiate_human_appeal",
+            "coordinate_exception",
+            "resolve_provider_access",
+            "obtain_valid_report"
+          ]
+        },
+        "required_human_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

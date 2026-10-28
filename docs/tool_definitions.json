@@ -1,0 +1,444 @@
+[
+  {
+    "name": "get_referral",
+    "description": "Inspect referral records, linked IDs, and public scheduling/delivery policies.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_coverage",
+    "description": "Read authoritative coverage and source-versioned records.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_documents",
+    "description": "List discoverable document metadata and attachment status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_provider_requirements",
+    "description": "Read current provider documentation and authorization requirements.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "provider_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "find_providers",
+    "description": "List directory candidates for the authorized specialty; check eligibility separately.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_provider_eligibility",
+    "description": "Check network, specialty, and intake eligibility.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "provider_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "check_authorization",
+    "description": "Inspect authorization records and current applicability.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "find_appointment_slots",
+    "description": "List available provider slots and patient constraints.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "provider_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_appointments",
+    "description": "Inspect linked appointments, including existing bookings.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_consultation_reports",
+    "description": "List report candidates with linkage, version, and status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "get_report_delivery",
+    "description": "Inspect delivery status and receipt for a specific delivery.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "delivery_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "delivery_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "attach_document",
+    "description": "Attach an available qualifying document; duplicate attachment is a no-op.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "document_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "document_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "submit_referral",
+    "description": "Submit a complete packet for acceptance; rejection is a domain outcome.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "reroute_referral",
+    "description": "Change to an eligible provider; invalidates prior acceptance and provider authorization.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "provider_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "provider_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "request_authorization",
+    "description": "Request authorization; approved, denied, and pending are distinct outcomes.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "schedule_appointment",
+    "description": "Book a compliant slot after acceptance and required authorization.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slot_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "slot_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "reconcile_appointment",
+    "description": "Link an existing valid appointment without creating a duplicate.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "appointment_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "appointment_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "deliver_report",
+    "description": "Deliver a current matching final report to an authorized recipient; does not close.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recipient_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "report_id",
+        "recipient_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "close_referral",
+    "description": "Close only after completed visit and required current report receipts.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id"
+      ],
+      "additionalProperties": false
+    }
+  },
+  {
+    "name": "escalate",
+    "description": "Record an evidence-linked human handoff. This does not certify that escalation is justified.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "referral_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocker_code": {
+          "type": "string",
+          "enum": [
+            "missing_required_document",
+            "unsubmitted_complete_packet",
+            "scheduling_pending",
+            "missing_authorization",
+            "required_document_unavailable",
+            "authorization_denied_human_appeal",
+            "provider_not_accepting",
+            "coverage_conflict",
+            "document_selection_required",
+            "appointment_record_mismatch",
+            "report_delivery_pending",
+            "report_delivery_failed",
+            "no_feasible_slot",
+            "authorization_expired",
+            "report_unavailable_or_invalid",
+            "no_eligible_provider"
+          ]
+        },
+        "evidence_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "attempted_action_event_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reason_unable_to_proceed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_action_code": {
+          "type": "string",
+          "enum": [
+            "obtain_required_document",
+            "initiate_human_appeal",
+            "coordinate_exception",
+            "resolve_provider_access",
+            "obtain_valid_report"
+          ]
+        },
+        "required_human_action": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "referral_id",
+        "blocker_code",
+        "evidence_event_ids",
+        "attempted_action_event_ids",
+        "reason_unable_to_proceed",
+        "human_action_code",
+        "required_human_action"
+      ],
+      "additionalProperties": false
+    }
+  }
+]
